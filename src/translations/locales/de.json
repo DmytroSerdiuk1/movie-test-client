@@ -12,7 +12,9 @@
     "already-have-account": "Hast du bereits ein Konto?",
     "logout": "Abmelden",
     "password": "Passwort",
-    "name": "Name"
+    "name": "Name",
+    "password-required": "Passwort erforderlich",
+    "name-required": "Name erforderlich"
   },
   "common": {
     "my-movies": "Meine Filme",

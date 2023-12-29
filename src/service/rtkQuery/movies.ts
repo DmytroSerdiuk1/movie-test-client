@@ -15,7 +15,7 @@ export const moviesApi = createApi({
           pageSize: 8,
         },
       }),
-      providesTags: ({ movies }) => [
+      providesTags: ({ movies = [] }) => [
         "Movie",
         ...movies.map((item: MovieData) => {
           return { type: "Movie", id: item.id };
@@ -53,12 +53,6 @@ export const moviesApi = createApi({
         method: "DELETE",
       }),
       invalidatesTags: (r, e, id) => [{ type: "Movie", id }],
-    }),
-    unAuthorized: build.mutation({
-      queryFn: () => ({
-        data: null,
-      }),
-      invalidatesTags: ["Movie"],
     }),
   }),
 });

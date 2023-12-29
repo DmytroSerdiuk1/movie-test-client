@@ -11,7 +11,9 @@
     "already-have-account": "Have an account?",
     "logout": "Logout",
     "password": "Password",
-    "name": "Name"
+    "name": "Name",
+    "password-required": "Password required",
+    "name-required": "Name required"
   },
   "common": {
     "my-movies": "My movies",

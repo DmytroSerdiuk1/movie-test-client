@@ -11,7 +11,9 @@
     "already-have-account": "Вже є обліковий запис?",
     "logout": "Вийти",
     "password": "Пароль",
-    "name": "Ім'я"
+    "name": "Ім'я",
+    "password-required": "Поле пароля є обов'язковим",
+    "name-required": "Поле імені є обов'язковим"
   },
   "common": {
     "my-movies": "Мої фільми",

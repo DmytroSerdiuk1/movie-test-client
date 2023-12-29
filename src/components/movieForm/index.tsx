@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { Box, Button, Stack, TextField } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Box, Button, Stack, TextField, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../enum/routes";
 import ImageDropZone from "../imageDropZone";
 import { Controller, useForm } from "react-hook-form";
@@ -21,8 +21,9 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
       year: "",
     },
   });
-
+  const theme = useTheme();
   const formValues = form.watch();
+  const navigate = useNavigate();
 
   const isChanged = values
     ? JSON.stringify(formValues) !== JSON.stringify(values)
@@ -38,11 +39,16 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
     <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
       <Grid2
         sx={{
-          mt: "120px",
+          pt: "120px",
+
+          [theme.breakpoints.down("lg")]: {
+            pt: "40px",
+            pb: "40px",
+          },
         }}
         container
       >
-        <Grid2 lg={4}>
+        <Grid2 xs={12} lg={4} order={{ xs: 2, lg: 1 }}>
           <Controller
             render={({ field: { onChange, value } }) => (
               <ImageDropZone value={value} onDrop={onChange} />
@@ -51,14 +57,17 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
             control={form.control}
           />
         </Grid2>
-        <Grid2 lg={3} lgOffset={1}>
+        <Grid2 xs={12} lg={3} lgOffset={1} order={{ xs: 1, lg: 2 }}>
           <Box
             sx={{
               width: "100%",
-              height: "450px",
               display: "flex",
               flexDirection: "column",
               gap: "24px",
+
+              [theme.breakpoints.down("lg")]: {
+                pb: 3,
+              },
             }}
           >
             <Controller
@@ -95,16 +104,15 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
               direction={"row"}
               gap={"10px"}
             >
-              <Link to={ROUTES.HOME}>
-                <Button
-                  type={"button"}
-                  fullWidth
-                  variant={"outlined"}
-                  size={"large"}
-                >
-                  {t("cancel")}
-                </Button>
-              </Link>
+              <Button
+                type={"button"}
+                fullWidth
+                onClick={() => navigate(ROUTES.HOME)}
+                variant={"outlined"}
+                size={"large"}
+              >
+                {t("cancel")}
+              </Button>
               <Button
                 type={"submit"}
                 fullWidth

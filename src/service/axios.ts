@@ -1,7 +1,8 @@
 import { BaseQueryFn } from "@reduxjs/toolkit/query";
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
+import { ROUTES } from "../enum/routes";
 import { clearTokens, getTokens, setAccessToken } from "../helpers/setTokens";
-
+import { router } from "../routes/router";
 export const axiosInstance = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
 });
@@ -29,6 +30,7 @@ axiosInstance.interceptors.response.use(
         })
         .catch(() => {
           clearTokens();
+          router.navigate(ROUTES.SIGN_IN);
         });
 
       return axiosInstance(originalRequest);

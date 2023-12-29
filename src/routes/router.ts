@@ -7,7 +7,7 @@ import CreateMovie from "../pages/CreateMovie";
 import EditMovie from "../pages/EditMovie";
 import AuthProvider from "../components/authProvider";
 
-export const routes = createBrowserRouter([
+export const router = createBrowserRouter([
   {
     path: ROUTES.HOME,
     Component: () => AuthProvider({ page: Home, isProtected: true }),
