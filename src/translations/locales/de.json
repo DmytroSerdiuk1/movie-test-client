@@ -1,0 +1,32 @@
+
+{
+  "auth": {
+    "sign-in": "Anmelden",
+    "sign-up": "Registrieren",
+    "create-movie": "Film erstellen",
+    "edit-movie": "Film bearbeiten",
+    "login": "Einloggen",
+    "register": "Registrieren",
+    "remember-me": "Erinnere dich an mich",
+    "dont-have-account": "Hast du kein Konto?",
+    "already-have-account": "Hast du bereits ein Konto?",
+    "logout": "Abmelden",
+    "password": "Passwort",
+    "name": "Name"
+  },
+  "common": {
+    "my-movies": "Meine Filme",
+    "title": "Titel",
+    "publishing-year": "Veröffentlichungsjahr",
+    "cancel": "Abbrechen",
+    "submit": "Senden",
+    "update": "Aktualisieren",
+    "drop-image": "Bild hier ablegen",
+    "create-movie": "Einen neuen Film erstellen",
+    "edit-movie": "Film bearbeiten",
+    "empty-movies": "Deine Filmliste ist leer",
+    "add-movie": "Einen neuen Film hinzufügen",
+    "next": "Weiter",
+    "previous": "Vorher"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "auth": {
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "create-movie": "Create movie",
+    "edit-movie": "Edit movie",
+    "login": "Login",
+    "register": "Register",
+    "remember-me": "Remember me",
+    "dont-have-account": "Don't have an account?",
+    "already-have-account": "Have an account?",
+    "logout": "Logout",
+    "password": "Password",
+    "name": "Name"
+  },
+  "common": {
+    "my-movies": "My movies",
+    "title": "Title",
+    "publishing-year": "Publishing year",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "update": "Update",
+    "drop-image": "Drop image here",
+    "create-movie": "Create a new movie",
+    "edit-movie": "Edit movie",
+    "empty-movies": "Your movie list is empty",
+    "add-movie": "Add a new movie",
+    "next": "Next",
+    "previous": "Prev"
+  }
+}
