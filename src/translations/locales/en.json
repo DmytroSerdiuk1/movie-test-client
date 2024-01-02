@@ -28,6 +28,10 @@
     "empty-movies": "Your movie list is empty",
     "add-movie": "Add a new movie",
     "next": "Next",
-    "previous": "Prev"
+    "previous": "Prev",
+    "publishing-year-error": "Publishing year is not valid",
+    "title-error": "Title is not valid, max length is 15",
+    "title-required": "Title is required",
+    "publishing-year-required": "Publishing year is required"
   }
 }

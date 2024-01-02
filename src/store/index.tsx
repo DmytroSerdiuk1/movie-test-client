@@ -1,15 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useSelector } from "react-redux";
-import { moviesApi } from "../service/rtkQuery/movies";
 import user from "./user/slice";
+import { api } from "../service/api/api";
 export const store = configureStore({
   reducer: {
     user: user,
-    [moviesApi.reducerPath]: moviesApi.reducer,
+    [api.reducerPath]: api.reducer,
   },
   devTools: process.env.NODE_ENV === "development",
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([moviesApi.middleware]),
+    getDefaultMiddleware({}).concat([api.middleware]),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

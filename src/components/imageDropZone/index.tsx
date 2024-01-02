@@ -8,9 +8,10 @@ import { useTranslation } from "react-i18next";
 interface Props {
   onDrop: (fileBase64: string) => void;
   value: string;
+  error?: boolean;
 }
 
-const ImageDropZone: FC<Props> = ({ onDrop, value }) => {
+const ImageDropZone: FC<Props> = ({ onDrop, value, error }) => {
   const { getRootProps, getInputProps } = useDropzone({
     onDrop: async (acceptedFiles) => {
       const base64 = await getBase64File(acceptedFiles[0]);
@@ -32,7 +33,7 @@ const ImageDropZone: FC<Props> = ({ onDrop, value }) => {
         height: "450px",
         background: "#224957",
         borderRadius: 10,
-        border: "2px dashed #fff",
+        border: `2px dashed ${error ? "#f44336" : "#fff"}`,
         overflow: "hidden",
       }}
       {...getRootProps()}

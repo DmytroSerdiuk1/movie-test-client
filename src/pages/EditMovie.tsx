@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import {
   useGetMovieQuery,
   useUpdateMovieMutation,
-} from "../service/rtkQuery/movies";
+} from "../service/api/movies";
 import { useNavigate, useParams } from "react-router-dom";
 import { ROUTES } from "../enum/routes";
 
@@ -14,7 +14,7 @@ const EditMovie = () => {
   const { t } = useTranslation("common");
   const { movieId } = useParams();
   const { data } = useGetMovieQuery(movieId || "");
-  const [updateMovie] = useUpdateMovieMutation();
+  const [updateMovie, { isLoading }] = useUpdateMovieMutation();
   const navigate = useNavigate();
 
   return (
@@ -22,11 +22,8 @@ const EditMovie = () => {
       <Container>
         <Typography variant={"h2"}>{t("edit-movie")}</Typography>
         <MovieForm
-          values={{
-            title: data?.title || "",
-            year: data?.year || "",
-            image: data?.image || "",
-          }}
+          values={data ? data : undefined}
+          isLoading={isLoading}
           onSubmit={({ title, year, image }) =>
             updateMovie({
               title,

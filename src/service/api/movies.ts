@@ -1,10 +1,7 @@
-import { createApi } from "@reduxjs/toolkit/query/react";
-import { axiosBaseQuery } from "../axios";
 import { MovieData } from "../../types/MovieData";
+import { api } from "./api";
 
-export const moviesApi = createApi({
-  tagTypes: ["Movie"],
-  baseQuery: axiosBaseQuery({ baseUrl: "/" }),
+export const moviesApi = api.injectEndpoints({
   endpoints: (build) => ({
     getMovies: build.query({
       query: ({ page }) => ({
@@ -15,19 +12,16 @@ export const moviesApi = createApi({
           pageSize: 8,
         },
       }),
-      providesTags: ({ movies = [] }) => [
-        "Movie",
-        ...movies.map((item: MovieData) => {
-          return { type: "Movie", id: item.id };
-        }),
-      ],
+      providesTags: () => ["Movie"],
     }),
     getMovie: build.query({
       query: (id: string) => ({
         url: `/movie/${id}`,
         method: "GET",
       }),
-      providesTags: (res) => ["Movie", { type: "Movie", id: res.id }],
+      providesTags: ({ id }) => {
+        return ["Movie", { type: "Movie", id }];
+      },
     }),
     addMovie: build.mutation({
       query: ({ ...data }: MovieData) => {
@@ -37,7 +31,9 @@ export const moviesApi = createApi({
           data,
         };
       },
-      invalidatesTags: ["Movie"],
+      invalidatesTags: ({ id }) => {
+        return ["Movie", { type: "Movie", id }];
+      },
     }),
     updateMovie: build.mutation({
       query: (movie: MovieData) => ({
@@ -45,14 +41,18 @@ export const moviesApi = createApi({
         method: "patch",
         data: movie,
       }),
-      invalidatesTags: (r, e, arg) => [{ type: "Movie", id: arg.id }],
+      invalidatesTags: ({ id }) => {
+        return ["Movie", { type: "Movie", id }];
+      },
     }),
     deleteMovie: build.mutation({
       query: (id: string) => ({
         url: `/movie/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: (r, e, id) => [{ type: "Movie", id }],
+      invalidatesTags: ({ id }) => {
+        return ["Movie", { type: "Movie", id }];
+      },
     }),
   }),
 });

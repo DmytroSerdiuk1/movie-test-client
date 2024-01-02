@@ -5,13 +5,12 @@ import AuthForm from "../components/authForm";
 import { ROUTES } from "../enum/routes";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
-import { register } from "../store/user/thunks";
+import { useRegisterMutation } from "../service/api/auth";
 
 const SignUp = () => {
   const { t } = useTranslation("auth");
-  const dispatch = useDispatch<AppDispatch>();
+  const [register, { isLoading }] = useRegisterMutation();
+
   return (
     <Layout>
       <Box
@@ -27,14 +26,13 @@ const SignUp = () => {
           {t("sign-up")}
         </Typography>
         <AuthForm
+          isLoading={isLoading}
           onSubmit={(data) => {
-            dispatch(
-              register({
-                name: data.name,
-                password: data.password,
-                isRemember: data.rememberMe,
-              }),
-            );
+            register({
+              name: data.name,
+              password: data.password,
+              isRemember: data.rememberMe,
+            });
           }}
           buttonText={t("sign-up")}
         />

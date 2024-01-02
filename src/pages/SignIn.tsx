@@ -5,13 +5,12 @@ import AuthForm from "../components/authForm";
 import { ROUTES } from "../enum/routes";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
-import { login } from "../store/user/thunks";
+import { useLoginMutation } from "../service/api/auth";
 
 const SignIn = () => {
   const { t } = useTranslation("auth");
-  const dispatch = useDispatch<AppDispatch>();
+  const [login, { isLoading }] = useLoginMutation();
+
   return (
     <Layout>
       <Box
@@ -27,14 +26,13 @@ const SignIn = () => {
           {t("sign-in")}
         </Typography>
         <AuthForm
+          isLoading={isLoading}
           onSubmit={(data) => {
-            dispatch(
-              login({
-                name: data.name,
-                password: data.password,
-                isRemember: data.rememberMe,
-              }),
-            );
+            login({
+              name: data.name,
+              password: data.password,
+              isRemember: data.rememberMe,
+            });
           }}
           buttonText={t("login")}
         />

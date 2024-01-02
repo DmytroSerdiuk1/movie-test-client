@@ -29,6 +29,10 @@
     "empty-movies": "Deine Filmliste ist leer",
     "add-movie": "Einen neuen Film hinzufügen",
     "next": "Weiter",
-    "previous": "Vorher"
+    "previous": "Vorher",
+    "publishing-year-error": "Veröffentlichungsjahr ungültig",
+    "title-error": "Titel ungültig, max. 15 Zeichen",
+    "title-required": "Titel erforderlich",
+    "publishing-year-required": "Veröffentlichungsjahr erforderlich"
   }
 }

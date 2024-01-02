@@ -21,7 +21,7 @@ import EmptyList from "../components/emptyList";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "../store";
 import { logout } from "../store/user/slice";
-import { useGetMoviesQuery } from "../service/rtkQuery/movies";
+import { useGetMoviesQuery } from "../service/api/movies";
 import { useTranslation } from "react-i18next";
 
 const Home = () => {

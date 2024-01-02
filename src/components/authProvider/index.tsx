@@ -1,11 +1,11 @@
 import { ComponentType, FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "../../store";
-import { checkUserExist } from "../../store/user/thunks";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 import { ROUTES } from "../../enum/routes";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { getTokens } from "../../helpers/setTokens";
+import { useCheckUserExistMutation } from "../../service/api/auth";
 const AuthProvider: FC<{
   page: ComponentType;
   isAuthPage?: boolean;
@@ -14,12 +14,11 @@ const AuthProvider: FC<{
   const Page = page;
   const user = useSelector((state: RootState) => state.user.user);
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
   const { accessToken, refreshToken } = getTokens();
-
+  const [checkUserExist] = useCheckUserExistMutation();
   useEffect(() => {
     if (!user && accessToken && isProtected) {
-      dispatch(checkUserExist());
+      checkUserExist({});
     } else if (!accessToken && isProtected) {
       navigate(ROUTES.SIGN_IN);
     }

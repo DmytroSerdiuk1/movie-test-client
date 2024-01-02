@@ -1,6 +1,13 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Grid2 from "@mui/material/Unstable_Grid2";
-import { Box, Button, Stack, TextField, useTheme } from "@mui/material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Stack,
+  TextField,
+  useTheme,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "../../enum/routes";
 import ImageDropZone from "../imageDropZone";
@@ -10,9 +17,11 @@ import { MovieData } from "../../types/MovieData";
 
 interface Props {
   onSubmit: (data: MovieData) => void;
+  isLoading?: boolean;
   values?: MovieData;
 }
-const MovieForm: FC<Props> = ({ onSubmit, values }) => {
+const MovieForm: FC<Props> = ({ onSubmit, values, isLoading }) => {
+  const [isValueSet, setIsValueSet] = useState(false);
   const { t } = useTranslation("common");
   const form = useForm({
     defaultValues: {
@@ -30,10 +39,11 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
     : true;
 
   useEffect(() => {
-    if (values) {
+    if (values && !isValueSet) {
       form.reset(values);
+      setIsValueSet(true);
     }
-  }, [values]);
+  }, [values, isValueSet]);
 
   return (
     <form onSubmit={form.handleSubmit((data) => onSubmit(data))}>
@@ -50,8 +60,11 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
       >
         <Grid2 xs={12} lg={4} order={{ xs: 2, lg: 1 }}>
           <Controller
-            render={({ field: { onChange, value } }) => (
-              <ImageDropZone value={value} onDrop={onChange} />
+            rules={{
+              required: true,
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <ImageDropZone value={value} error={!!error} onDrop={onChange} />
             )}
             name={"image"}
             control={form.control}
@@ -71,25 +84,63 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
             }}
           >
             <Controller
-              render={({ field: { onChange, value } }) => (
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
                 <TextField
                   value={value}
                   onChange={onChange}
                   name={"title"}
                   fullWidth
+                  error={!!error}
+                  helperText={error?.message}
                   label={t("title")}
                 />
               )}
+              rules={{
+                required: {
+                  value: true,
+                  message: t("title-required"),
+                },
+                maxLength: {
+                  value: 15,
+                  message: t("title-error"),
+                },
+              }}
               name={"title"}
               control={form.control}
             />
             <Controller
-              render={({ field: { onChange, value } }) => (
+              rules={{
+                required: {
+                  value: true,
+                  message: t("publishing-year-required"),
+                },
+                maxLength: {
+                  value: 4,
+                  message: t("publishing-year-error"),
+                },
+                minLength: {
+                  value: 4,
+                  message: t("publishing-year-error"),
+                },
+                pattern: {
+                  value: /^\d{4}$/,
+                  message: t("publishing-year-error"),
+                },
+              }}
+              render={({
+                field: { onChange, value },
+                fieldState: { error },
+              }) => (
                 <TextField
                   value={value}
                   onChange={onChange}
                   name={"publishing-year"}
                   fullWidth
+                  error={!!error}
+                  helperText={error?.message}
                   label={t("publishing-year")}
                 />
               )}
@@ -118,7 +169,14 @@ const MovieForm: FC<Props> = ({ onSubmit, values }) => {
                 fullWidth
                 variant={"contained"}
                 size={"large"}
-                disabled={!isChanged}
+                disabled={!isChanged || isLoading}
+                {...(isLoading
+                  ? {
+                      startIcon: (
+                        <CircularProgress size={15} color={"inherit"} />
+                      ),
+                    }
+                  : {})}
               >
                 {values ? t("update") : t("submit")}
               </Button>

@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Checkbox,
+  CircularProgress,
   FormControlLabel,
   TextField,
 } from "@mui/material";
@@ -17,9 +18,10 @@ export interface AuthFormValues {
 
 interface Props {
   buttonText?: string;
+  isLoading?: boolean;
   onSubmit?: (data: AuthFormValues) => void;
 }
-const AuthForm: FC<Props> = ({ buttonText, onSubmit }) => {
+const AuthForm: FC<Props> = ({ isLoading, buttonText, onSubmit }) => {
   const { t } = useTranslation("auth");
   const form = useForm({
     defaultValues: {
@@ -114,7 +116,16 @@ const AuthForm: FC<Props> = ({ buttonText, onSubmit }) => {
           />
         </Box>
         {buttonText && (
-          <Button type={"submit"} size={"large"} variant={"contained"}>
+          <Button
+            type={"submit"}
+            size={"large"}
+            variant={"contained"}
+            {...(isLoading
+              ? {
+                  startIcon: <CircularProgress size={15} color={"inherit"} />,
+                }
+              : {})}
+          >
             {buttonText}
           </Button>
         )}
